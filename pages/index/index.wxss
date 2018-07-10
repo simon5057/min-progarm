@@ -1,21 +1,25 @@
 /**index.wxss**/
-.userinfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+
+page {
+    background-color: skyblue;
 }
 
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
+.banner-ad-bg {
+    background-color: yellow;
 }
 
-.userinfo-nickname {
-  color: #aaa;
+zan-popup {
+    height: 100%;
 }
 
-.usermotto {
-  margin-top: 200px;
+.left-wrap {
+    /* width: 200rpx; */
+	padding-top: 20rpx;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 3rpx -3rpx 10rpx 0px #fff;
+}
+.left-wrap  view {
+	margin: 10rpx;
+	padding: 10rpx 20rpx;
 }

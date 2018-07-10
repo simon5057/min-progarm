@@ -1,0 +1,4 @@
+<!--components/rotate-nav/index.wxml-->
+<view class="wrap" catchtouchstart="startChange" catchtouchmove="moveChange" catchtouchend="endChange" style="transform: rotateX(-2deg) rotateY({{rotateAngle}}deg);">
+    <view class="title {{index!==currentIndex?'translucent':''}}" wx:for="{{lists}}" wx:key style="transform: rotateY({{360/lists.length*index}}deg) translateZ({{r}}rpx);">标题{{item}}</view>
+</view>

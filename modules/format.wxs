@@ -1,0 +1,13 @@
+// 格式化分数（肤质得分）
+function formatNum(num) {
+    if (!num) {
+        return 0;
+    }
+    if (typeof num === 'string') {
+        num = Number(num);
+    }
+    return Math.floor(num);
+}
+module.exports = {
+    formatNum: formatNum,
+}

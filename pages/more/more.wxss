@@ -1,0 +1,70 @@
+page{
+ background: #343B48;
+}
+.all_wrap{
+  padding-bottom: 50rpx;
+  margin-top: 30rpx
+}
+.title_outer {
+  background: #343B48;
+}
+.wait{
+  text-align: center;
+  margin-top: 50%;
+  font-size: 30rpx;
+  color: #fff;
+}
+.ad_item{
+  width:684rpx;
+  height:164rpx;
+  background:rgba(46,51,61,1);
+  border-radius:8rpx;
+  margin: 40rpx auto;
+  display: flex;
+  align-items: center;
+  padding: 36rpx 30rpx;
+  box-sizing: border-box;
+  position: relative;
+}
+.ad_item image{
+  width: 92rpx;
+  height: 92rpx;
+  border-radius: 50%
+}
+.ad_msg{
+  display: flex;
+  flex-direction: column;
+  margin-left: 40rpx;
+  height: 96rpx;
+  justify-content: space-between;
+  white-space: nowrap;
+  width: 300rpx;
+}
+.ad_msg .ad_msg_p{
+  font-size:40rpx;
+  color:#FFFFFF;
+  line-height:56rpx;
+  overflow: hidden;
+  text-overflow:ellipsis;
+}
+.ad_msg .ad_msg_i{
+  font-size:20rpx;
+  color:#FFFFFF;
+  line-height:28rpx;
+  overflow: hidden;
+  text-overflow:ellipsis;
+}
+.try{
+  width:188rpx;
+  height:72rpx;
+  background:#46BA56;
+  border-radius:200rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 28rpx;
+  position: absolute;
+  top: 46rpx;
+  right: 26rpx
+}

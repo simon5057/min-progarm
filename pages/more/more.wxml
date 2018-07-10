@@ -1,0 +1,17 @@
+ <view class='all_wrap'>
+  <view class='ad_item' wx:for="{{adList}}" bindtap='tryIt' data-appid="{{item.appid}}" data-token="{{item.token}}" data-adid="{{item.adid}}">
+    <image src="{{item.json.imgurl}}"></image>
+
+    <view class='ad_msg'>
+      <view class="ad_msg_p">{{item.json.title}}</view>
+      <view class="ad_msg_i">{{item.json.describe}}</view>
+    </view>
+
+    <view class='try'>
+        去试试
+    </view>
+  </view>
+</view>
+<view class='wait' wx:if="{{adList.length==0||openshare==0}}">
+  暂无更多...
+</view> 

@@ -1,0 +1,11 @@
+<!--component/authorization-button/authorization-button.wxml-->
+<!-- 用户授权button -->
+<view class='authorize-wrap' wx:if='{{!userAuthorized}}'>
+    <button class='authorize-wrap' open-type="getUserInfo" bindgetuserinfo="userInfoHandler"></button>
+</view>
+
+<!-- 用法
+bind:authorization 用户授权成功后的回调 
+
+<authorization-button wx:if='{{AuthorizationModal}}' bind:authorization='hideAuthorizationModal'></authorization-button>
+ -->

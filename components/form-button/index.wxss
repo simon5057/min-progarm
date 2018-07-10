@@ -1,0 +1,15 @@
+/* components/form-button/index.wxss */
+
+/* 模板消息遮罩 start*/
+
+.form-button-madal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99;
+    opacity: 0;
+}
+
+/* 模板消息遮罩 end*/

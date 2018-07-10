@@ -1,13 +1,21 @@
-<!--index.wxml-->
-<view class="container">
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
-  </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view>
-</view>
+<!-- index.wxml -->
+<banner-ad bannerAdInfo='{{bannerAdInfo}}' bind:open='openAd' wrap-class='banner-ad-bg'></banner-ad>
+
+<authorization-button wx:if='{{AuthorizationModal}}' bind:authorization='hideAuthorizationModal'></authorization-button>
+
+<zan-noticebar text="{{ text }}" scrollable="true" speed="{{ 20 }}" />
+<form-button bind:sendFormMessage="sendFormMessage"></form-button>
+<!-- 从左侧弹出的弹层 -->
+<zan-popup type="left" show="{{ isShow }}" overlay="{{ isShow }}" bindclose="togglePopup">
+    <view class="left-wrap">
+        <view bindtap='test'>1111</view>
+        <view>2222</view>
+        <view>3333</view>
+        <view>4444</view>
+    </view>
+</zan-popup>
+
+<view bindtap='togglePopup'>show</view>
+<!-- <view class='test'></view>  -->
+
+<rotate-nav></rotate-nav>

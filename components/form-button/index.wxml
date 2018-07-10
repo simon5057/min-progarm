@@ -1,0 +1,10 @@
+<!--components/form-button/index.wxml-->
+<!-- 模板消息遮罩 start -->
+<form bindsubmit='submitFormId' report-submit wx:if="{{show}}">
+    <button form-type='submit' class='form-button-madal'></button>
+</form>
+<!-- 模板消息遮罩 end -->
+
+<!--用法  -->
+<!--  sendFormMessage 点击模板蒙层的回调函数-->
+<!-- <form-button bind:sendFormMessage="sendFormMessage"></form-button> -->

@@ -1,54 +1,91 @@
-//index.js
-//获取应用实例
 const app = getApp()
+const Api = require('../../api/api.js')
 
 Page({
-  data: {
-    motto: 'Hello World',
-    userInfo: {},
-    hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
-  },
-  //事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
-  },
-  onLoad: function () {
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    } else if (this.data.canIUse){
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
+    data: {
+        AuthorizationModal: true,
+        bannerAdInfo: null,
+
+        text: '大帅哥撒多所所所所所所所所所安徽省过付扩军哈所扩过或扩啦所军多过绿扩扩扩扩扩扩扩扩扩扩',
+        scrollable: 'xxx',
+		isShow: false
+    },
+
+    onLoad: function () {
+        this._init();
+        Api.adListBytype(1).then(res => {
+            this.setData({
+                bannerAdInfo: res.data.data[0]
+            })
         })
-      }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
+    },
+	test() {
+		console.log(1);
+	},
+	togglePopup() {
+		this.setData({
+			isShow: !this.data.isShow
+		});
+	},
+    onShow() {},
+    // 初始化
+    _init() {
+        // 检查用户是否授权  获取用户信息之前执行回调函数(关闭授权蒙层)
+        Api.checkAuthorizationGetUserInfo(() => {
+            this.setData({
+                AuthorizationModal: false
+            })
+        }).then(res => {
+            // 用户已授权
+            console.log(res);
+        }, err => {
+            // 用户未授权
+            console.log(err);
+        })
+    },
+    // 授权成功后隐藏授权蒙层
+    hideAuthorizationModal(e) {
+        console.log(e);
+        this.setData({
+            AuthorizationModal: false
+        })
+    },
+    // 点击广告上报
+    openAd(e) {
+        console.log(e.detail);
+        let data = e.detail;
+        Api.showAdByAdId(data.adid).then(res => {
+            console.log(res);
+            let adData = res.data.data;
+            return Api.clickAdReport(data.adid, adData.token);
+        }).then(res => {
+            console.log(res);
+        })
+    },
+    // 存储并发送模板消息
+    sendFormMessage(e) {
+        console.log(e.detail);
+        let data = e.detail;
+        let fn = data.formMessage;
+        fn.dealFormId(data.formId, this.data.token, () => {
+            console.log(1)
+        })
+    },
+    /**
+     * TokenExpiredLoginAgain token过期，重新登录
+     * @param {Object} err 请求错误对象
+     * @param {functio} callback 重新登录成功后的回调
+     */
+    TokenExpiredLoginAgain(err, callback) {
+        if (!!err && err.statusCode === 403) {
+            if (callback && typeof callback !== 'function') throw new Error('TokenExpiredLoginAgain callback参数类型必须为function');
+            app.login().then(res => {
+                this.setData({
+                    token: app.globalData.token
+                }, () => {
+                    if (callback) callback(res);
+                })
+            })
         }
-      })
     }
-  },
-  getUserInfo: function(e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
-  }
 })

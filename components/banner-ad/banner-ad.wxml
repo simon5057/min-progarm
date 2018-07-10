@@ -1,0 +1,21 @@
+<!--components/banner-ad/banner-ad.wxml-->
+<!-- 广告 start -->
+<view class='advertisement wrap-class' wx:if='{{bannerAdInfo && !bannerAdInfo.content.banner_url}}' catchtap='_open'>
+  <image class='advertisement-header' src='{{bannerAdInfo.content.imgurl}}'></image>
+  <view class='advertisement-info-wrapper'>
+    <view class='advertisement-name'>{{bannerAdInfo.content.title}}</view>
+    <view class='advertisement-desc'>{{bannerAdInfo.content.describe}}</view>
+  </view>
+  <image class='advertisement-arrow' src='../../images/banner-ad/right-arrow.png'></image>
+</view>
+<view class='advertisement advertisement-banner' wx:if='{{bannerAdInfo && bannerAdInfo.content.banner_url}}' catchtap='_open'>
+  <image class='advertisement-bannerad' src='{{bannerAdInfo.content.banner_url}}' mode='widthFix'></image>
+</view>
+<!-- 广告 end -->
+
+<!-- 用法
+  bannerAdInfo: 广告数据信息
+  bind:open 打开广告的回调 
+  wrap-class 组件调用的外部类
+-->
+<!-- <banner-ad bannerAdInfo='{{bannerAdInfo}}' bind:open='openAd'></banner-ad> -->
