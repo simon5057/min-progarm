@@ -8,21 +8,30 @@ const mobile = wx.getSystemInfoSync()['model'];
 
 class CommonApi {
     constructor() {}
-    // http
-    static http(options) {
+    static wxPack(wxFunc, options = {}) {
         return new Promise((_, $) => {
-            wx.request({
+            wxFunc({
                 ...options,
                 success(res) {
-                    if (res.statusCode === 200 && res.data.code == 200) {
-                        _(res.data);
-                    } else {
-                        $(res);
-                    }
+                    _(res);
                 },
                 fail(err) {
                     $(err);
                 }
+            })
+        })
+    }
+    // http
+    static http(options) {
+        return new Promise((_, $) => {
+            this.wxPack(wx.request, options).then(res => {
+                if (res.statusCode === 200 && res.data.code == 200) {
+                    _(res.data);
+                } else {
+                    $(res);
+                }
+            }, err => {
+                $(err);
             })
         })
     }
@@ -42,26 +51,19 @@ class CommonApi {
     }
     // 微信登录
     static wxLogin() {
-        return new Promise((_, $) => {
-            wx.login({
-                success(res) {
-                    _(res);
-                },
-                fail(err) {
-                    $(err);
-                }
-            })
-        })
+        return this.wxPack(wx.login);
     }
     // 微信获取用户信息
     static wxGetUserInfo() {
+        return this.wxPack(wx.getUserInfo);
+    }
+    static wxGetSetting(scope) {
         return new Promise((_, $) => {
-            wx.getUserInfo({
-                success(res) {
+            this.wxPack(wx.getSetting).then(res => {
+                if (res.authSetting[`scope.${scope}`]) {
                     _(res);
-                },
-                fail(err) {
-                    $(err);
+                } else {
+                    $(res);
                 }
             })
         })
@@ -69,14 +71,10 @@ class CommonApi {
     // 验证用户是否授权
     static checkAuthorization() {
         return new Promise((_, $) => {
-            wx.getSetting({
-                success(res) {
-                    if (res.authSetting['scope.userInfo']) {
-                        _(res);
-                    } else {
-                        $(res);
-                    }
-                }
+            this.wxGetSetting('userInfo').then(res => {
+                _(res);
+            }, err => {
+                $(err);
             })
         })
     }

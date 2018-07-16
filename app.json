@@ -3,6 +3,7 @@
         "pages/index/index",
 		"pages/share/share",		
         "pages/webview/webview",
+        "pages/weather/weather",
         "pages/more/more"
     ],
     "window": {
