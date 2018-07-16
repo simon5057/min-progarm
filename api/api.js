@@ -8,28 +8,21 @@ class Api extends require('./common-api') {
     }
 
     // 业务api
-    // static example() {
-    //     return new Promise((_, $) => {
-
+    // static example(value) {
+    //     return this.post({
+    //         url: `${APIURL}/example`,
+    //         data: {
+    //             key: value
+    //         }
     //     })
     // }
     // 用户登录
     static loginToApp(code) {
-        return new Promise((_, $) => {
-            wx.request({
-                method: 'POST',
-                url: `${APIURL}/login`,
-                data: {
-                    code: code
-                },
-                success(res) {
-                    if (res.statusCode === 200) {
-                        _(res.data);
-                    } else {
-                        $(res);
-                    }
-                }
-            })
+        return this.post({
+            url: `${APIURL}/login`,
+            data: {
+                code: code
+            }
         })
     }
     // 微信登录获取code，并登录

@@ -8,6 +8,38 @@ const mobile = wx.getSystemInfoSync()['model'];
 
 class CommonApi {
     constructor() {}
+    // http
+    static http(options) {
+        return new Promise((_, $) => {
+            wx.request({
+                ...options,
+                success(res) {
+                    if (res.statusCode === 200 && res.data.code == 200) {
+                        _(res.data);
+                    } else {
+                        $(res);
+                    }
+                },
+                fail(err) {
+                    $(err);
+                }
+            })
+        })
+    }
+    // get
+    static get(options) {
+        return this.http({
+            method: "GET",
+            ...options
+        })
+    }
+    // post
+    static post(options) {
+        return this.http({
+            method: "POST",
+            ...options
+        })
+    }
     // 微信登录
     static wxLogin() {
         return new Promise((_, $) => {
@@ -72,22 +104,12 @@ class CommonApi {
      */
     static adListBytype(type) {
         if (!type) throw new Error('adListBytype 缺少参数type');
-        return new Promise((_, $) => {
-            wx.request({
-                method: 'POST',
-                url: `${ADURL}/ad/adTypeList`,
-                data: {
-                    channelid: CHANNELID,
-                    type: type
-                },
-                success(res) {
-                    if (res.statusCode === 200 && res.data.code == 200) {
-                        _(res);
-                    } else {
-                        $(res);
-                    }
-                }
-            })
+        return this.post({
+            url: `${ADURL}/ad/adTypeList`,
+            data: {
+                channelid: CHANNELID,
+                type: type
+            }
         })
     }
     /**
@@ -96,45 +118,25 @@ class CommonApi {
      */
     static showAdByAdId(adId) {
         if (!adId) throw new Error('showAdByAdId 缺少参数adId');
-        return new Promise((_, $) => {
-            wx.request({
-                method: 'POST',
-                url: `${ADURL}/ad/show`,
-                data: {
-                    channelid: CHANNELID,
-                    mobile: mobile,
-                    adid: adId,
-                },
-                success(res) {
-                    if (res.statusCode === 200 && res.data.code == 200) {
-                        _(res);
-                    } else {
-                        $(res);
-                    }
-                }
-            })
+        return this.post({
+            url: `${ADURL}/ad/show`,
+            data: {
+                channelid: CHANNELID,
+                mobile: mobile,
+                adid: adId,
+            }
         })
     }
     /**
      * ` showAllAd ` 批量展示广告
      */
     static showAllAd() {
-        return new Promise((_, $) => {
-            wx.request({
-                method: 'POST',
-                url: `${ADURL}/ad/showList`,
-                data: {
-                    channelid: CHANNELID,
-                    mobile: mobile,
-                },
-                success(res) {
-                    if (res.statusCode === 200 && res.data.code == 200) {
-                        _(res);
-                    } else {
-                        $(res);
-                    }
-                }
-            })
+        return this.post({
+            url: `${ADURL}/ad/showList`,
+            data: {
+                channelid: CHANNELID,
+                mobile: mobile,
+            }
         })
     }
     /**
@@ -144,24 +146,14 @@ class CommonApi {
      */
     static clickAdReport(adId, adToken) {
         if (!adId || !adToken) throw new Error('clickAdReport 缺少参数adId/adToken');
-        return new Promise((_, $) => {
-            wx.request({
-                method: 'POST',
-                url: `${ADURL}/ad/click`,
-                data: {
-                    channelid: CHANNELID,
-                    mobile: mobile,
-                    adid: adId,
-                    token: adToken
-                },
-                success(res) {
-                    if (res.statusCode === 200 && res.data.code == 200) {
-                        _(res);
-                    } else {
-                        $(res);
-                    }
-                }
-            })
+        return this.post({
+            url: `${ADURL}/ad/click`,
+            data: {
+                channelid: CHANNELID,
+                mobile: mobile,
+                adid: adId,
+                token: adToken
+            }
         })
     }
     /**
@@ -171,24 +163,14 @@ class CommonApi {
      */
     static jumpMinProgramReport(adId, adToken) {
         if (!adId || !adToken) throw new Error('jumpMinProgramReport 缺少参数adId/adToken');
-        return new Promise((_, $) => {
-            wx.request({
-                method: 'POST',
-                url: `${ADURL}/ad/jump`,
-                data: {
-                    channelid: CHANNELID,
-                    mobile: mobile,
-                    adid: adId,
-                    token: adToken
-                },
-                success(res) {
-                    if (res.statusCode === 200 && res.data.code == 200) {
-                        _(res);
-                    } else {
-                        $(res);
-                    }
-                }
-            })
+        return this.post({
+            url: `${ADURL}/ad/jump`,
+            data: {
+                channelid: CHANNELID,
+                mobile: mobile,
+                adid: adId,
+                token: adToken
+            }
         })
     }
 }

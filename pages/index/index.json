@@ -3,6 +3,7 @@
     "usingComponents": {
         "authorization-button": "/components/authorization-button/authorization-button",
         "banner-ad": "/components/banner-ad/banner-ad",
+        "float-ad": "/components/float-ad/float-ad",
         "zan-noticebar": "/components/noticebar/index",
         "form-button": "/components/form-button/index",
 		"zan-popup": "/components/popup/index",

@@ -1,0 +1,11 @@
+/* components/float-ad/float-ad.wxss */
+.float-ad {
+    position: relative;
+    width: 80rpx;
+    height: 80rpx;
+}
+.float-ad-img {
+    width: 80rpx;
+    height: 80rpx;
+    border-radius: 50%;
+}

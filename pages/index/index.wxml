@@ -1,5 +1,5 @@
 <!-- index.wxml -->
-<banner-ad bannerAdInfo='{{bannerAdInfo}}' bind:open='openAd' wrap-class='banner-ad-bg'></banner-ad>
+<banner-ad bind:open='openAd' wrap-class='banner-ad-bg'></banner-ad>
 
 <authorization-button wx:if='{{AuthorizationModal}}' bind:authorization='hideAuthorizationModal'></authorization-button>
 
@@ -19,3 +19,4 @@
 <!-- <view class='test'></view>  -->
 
 <rotate-nav></rotate-nav>
+<float-ad></float-ad>

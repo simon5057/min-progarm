@@ -13,11 +13,6 @@ Page({
 
     onLoad: function () {
         this._init();
-        Api.adListBytype(1).then(res => {
-            this.setData({
-                bannerAdInfo: res.data.data[0]
-            })
-        })
     },
 	test() {
 		console.log(1);
@@ -50,17 +45,9 @@ Page({
             AuthorizationModal: false
         })
     },
-    // 点击广告上报
+    // 点击广告后的回调
     openAd(e) {
-        console.log(e.detail);
-        let data = e.detail;
-        Api.showAdByAdId(data.adid).then(res => {
-            console.log(res);
-            let adData = res.data.data;
-            return Api.clickAdReport(data.adid, adData.token);
-        }).then(res => {
-            console.log(res);
-        })
+        console.log(e.detail)
     },
     // 存储并发送模板消息
     sendFormMessage(e) {
@@ -71,21 +58,5 @@ Page({
             console.log(1)
         })
     },
-    /**
-     * TokenExpiredLoginAgain token过期，重新登录
-     * @param {Object} err 请求错误对象
-     * @param {functio} callback 重新登录成功后的回调
-     */
-    TokenExpiredLoginAgain(err, callback) {
-        if (!!err && err.statusCode === 403) {
-            if (callback && typeof callback !== 'function') throw new Error('TokenExpiredLoginAgain callback参数类型必须为function');
-            app.login().then(res => {
-                this.setData({
-                    token: app.globalData.token
-                }, () => {
-                    if (callback) callback(res);
-                })
-            })
-        }
-    }
+
 })

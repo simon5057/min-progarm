@@ -69,7 +69,7 @@ function sendFormIds(token, callback) {
         if (expire > nowTime) return;
     }
     wx.setStorageSync('addFormIdLastTime', nowTime.toString());
-    sendFormId(token, formIdData).then(res => console.log(res));
+    sendFormId(token, formIdData).then(console.log);
 }
 
 module.exports = {

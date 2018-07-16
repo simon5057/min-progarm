@@ -1,0 +1,22 @@
+<!--pages/share/share.wxml-->
+<view wx:if='{{weather!=="rain" &&weather!=="snow"}}' class='top {{weather}}'>
+    <view class='cloud'>
+        <view class='cloud-inner'></view>
+    </view>
+</view>
+
+<view wx:if='{{weather=="rain" || weather=="snow"}}' class='top {{weather}} {{weatherLevel}}'>
+    <view class='inner' wx:if='{{weather=="snow"}}'>
+        <view wx:for='{{levelCounts}}' wx:key class='snowflake {{item.content?"snow-normal":""}}' style='{{item.style}}'></view>
+    </view>
+    <view class='inner' wx:if='{{weather=="rain"}}'>
+        <view wx:for='{{levelCounts}}' wx:key class='raindrop' style='{{item.style}}'></view>
+    </view>
+</view>
+
+<view wx:for='{{weathers}}' bindtap='changeWeather' data-weather='{{item}}' wx:key>
+<view>{{index}}. {{item}}</view>
+	<view wx:if='{{item=="rain" || item =="snow"}}'>
+		<view wx:for='{{weatherLevels}}' wx:key bindtap='changeWeatherLevel' data-weatherLevel='{{item}}'>{{item}}</view>
+	</view>
+</view>

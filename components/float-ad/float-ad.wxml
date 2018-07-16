@@ -1,0 +1,5 @@
+<!--components/float-ad/float-ad.wxml-->
+<view class="float-ad" wx:if="{{floatAdInfo}}" catchtap='_open'>
+    <image class="float-ad-img" src='{{floatAdInfo.content.imgurl}}'></image>
+    <slot></slot>
+</view>

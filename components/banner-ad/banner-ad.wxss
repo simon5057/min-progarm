@@ -4,7 +4,6 @@
 
 .advertisement {
   width: 100%;
-  margin-top: 10rpx;
   padding: 30rpx 39rpx 30rpx 30rpx;
   display: flex;
   flex-direction: row;
