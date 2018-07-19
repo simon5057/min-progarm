@@ -1,5 +1,8 @@
 <!--components/float-ad/float-ad.wxml-->
 <view class="float-ad" wx:if="{{floatAdInfo}}" catchtap='_open'>
-    <image class="float-ad-img" src='{{floatAdInfo.content.imgurl}}'></image>
-    <slot></slot>
+    <navigator target="miniProgram" open-type="navigate" app-id="{{showAdInfo.appid}}" path="{{showAdInfo.path}}" extra-data="{{showAdInfo.extraData}}"
+        version="release" hover-class="none">
+        <image class="float-ad-img" src='{{floatAdInfo.content.imgurl}}'></image>
+        <slot></slot>
+    </navigator>
 </view>

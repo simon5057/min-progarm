@@ -44,21 +44,7 @@ Component({
             let adInfo = this.data.showAdInfo;
             Api.clickAdReport(adid, adInfo.token).then(res => {
                 this.triggerEvent("open", this.data.floatAdInfo);
-                this.toOtherMinProgram(adInfo, console.log);
             })
-        },
-        // 跳转到小程序
-        toOtherMinProgram(currentAdInfo, callback) {
-            wx.navigateToMiniProgram({
-                appId: currentAdInfo.appid,
-                path: currentAdInfo.path,
-                extraData: currentAdInfo.extraData,
-                // envVersion: 'release',
-                success(res) {
-                    if (callback) callback(res);
-                },
-                fail: console.log
-            })
-        },
+        }
     }
 })

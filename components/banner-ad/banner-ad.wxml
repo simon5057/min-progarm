@@ -1,17 +1,20 @@
 <!--components/banner-ad/banner-ad.wxml-->
 <!-- 广告 start -->
-<view wx:if='bannerAdInfo && show'>
-    <view class='advertisement wrap-class' wx:if='{{bannerAdInfo && !bannerAdInfo.content.banner_url}}' catchtap='_open'>
-        <image class='advertisement-header' src='{{bannerAdInfo.content.imgurl}}'></image>
-        <view class='advertisement-info-wrapper'>
-            <view class='advertisement-name'>{{bannerAdInfo.content.title}}</view>
-            <view class='advertisement-desc'>{{bannerAdInfo.content.describe}}</view>
+<view wx:if='bannerAdInfo && show' catchtap='_open'>
+    <navigator target="miniProgram" open-type="navigate" app-id="{{showAdInfo.appid}}" path="{{showAdInfo.path}}" extra-data="{{showAdInfo.extraData}}"
+        version="release" hover-class="none">
+        <view class='advertisement wrap-class' wx:if='{{bannerAdInfo && !bannerAdInfo.content.banner_url}}'>
+            <image class='advertisement-header' src='{{bannerAdInfo.content.imgurl}}'></image>
+            <view class='advertisement-info-wrapper'>
+                <view class='advertisement-name'>{{bannerAdInfo.content.title}}</view>
+                <view class='advertisement-desc'>{{bannerAdInfo.content.describe}}</view>
+            </view>
+            <image class='advertisement-arrow' src='../../images/banner-ad/right-arrow.png'></image>
         </view>
-        <image class='advertisement-arrow' src='../../images/banner-ad/right-arrow.png'></image>
-    </view>
-    <view class='advertisement advertisement-banner' wx:if='{{bannerAdInfo && bannerAdInfo.content.banner_url}}' catchtap='_open'>
-        <image class='advertisement-bannerad' src='{{bannerAdInfo.content.banner_url}}' mode='widthFix'></image>
-    </view>
+        <view class='advertisement advertisement-banner' wx:if='{{bannerAdInfo && bannerAdInfo.content.banner_url}}'>
+            <image class='advertisement-bannerad' src='{{bannerAdInfo.content.banner_url}}' mode='widthFix'></image>
+        </view>
+    </navigator>
 </view>
 <!-- 广告 end -->
 

@@ -19,15 +19,10 @@ Page({
     },
     //点击广告
     tryIt(e) {
-        var appid = e.currentTarget.dataset.appid;
         var adid = e.currentTarget.dataset.adid;
         var token = e.currentTarget.dataset.token;
-        Api.clickAdReport(adid, token).then(res => {
-            wx.navigateToMiniProgram({
-                appId: appid,
-                success: console.log,
-                fail: console.log
-            })
+        api.clickAdReport(adid, token).then(res => {
+            console.log(res)
         })
     },
 })

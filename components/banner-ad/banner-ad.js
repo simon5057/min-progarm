@@ -1,9 +1,15 @@
 // components/banner-ad/banner-ad.js
 const Api = require('../../api/api.js')
+const orders = ['normal', 'inverted'];
 
 Component({
     // 组件的属性列表
-    properties: {},
+    properties: {
+        order: {
+            type: String,
+            value: 'normal'
+        }
+    },
     externalClasses: ['wrap-class'],
     // 组件的初始数据
     data: {
@@ -31,24 +37,41 @@ Component({
                 let adList = res.data;
                 // console.log(adList)
                 if (clickedAdList) {
-                    for (let i = 0; i < adList.length; i++) {
-                        const ele = adList[i];
-                        if (!(~clickedAdList.indexOf(ele.adid))) {
-                            this.setData({
-                                bannerAdInfo: ele
-                            })
-                            // console.log(ele)
-                            return Api.showAdByAdId(ele.adid);
+                    if (this.data.order === orders[0]) {
+                        for (let i = 0; i < adList.length; i++) {
+                            const ele = adList[i];
+                            if (!(~clickedAdList.indexOf(ele.adid))) {
+                                this.setData({
+                                    bannerAdInfo: ele
+                                })
+                                return Api.showAdByAdId(ele.adid);
+                            }
+                        }
+                    } else {
+                        for (let i = adList.length - 1; i >= 0; i--) {
+                            const ele = adList[i];
+                            if (!(~clickedAdList.indexOf(ele.adid))) {
+                                this.setData({
+                                    bannerAdInfo: ele
+                                })
+                                return Api.showAdByAdId(ele.adid);
+                            }
                         }
                     }
                 } else {
+                    let data;
+                    if (this.data.order === orders[0]) {
+                        data = adList[0];
+                    } else {
+                        data = adList[adList.length - 1];
+                    }
                     this.setData({
-                        bannerAdInfo: adList[0]
+                        bannerAdInfo: data
                     })
-                    return Api.showAdByAdId(adList[0].adid);
+                    return Api.showAdByAdId(data.adid);
                 }
             }).then(res => {
-                if(res) {
+                if (res) {
                     this.setData({
                         showAdInfo: res.data
                     })
@@ -85,23 +108,7 @@ Component({
                     show: false
                 })
                 this.triggerEvent("open", this.data.bannerAdInfo);
-                this.toOtherMinProgram(adInfo, console.log);
             })
-        },
-        // 跳转到小程序
-        toOtherMinProgram(currentAdInfo, callback) {
-            wx.navigateToMiniProgram({
-                appId: currentAdInfo.appid,
-                path: currentAdInfo.path,
-                extraData: currentAdInfo.extraData,
-                // envVersion: 'release',
-                success(res) {
-                    if (callback) callback(res);
-                },
-                fail(err) {
-                    // console.log(err)
-                }
-            })
-        },
+        }
     }
 })

@@ -1,17 +1,22 @@
 <view class='all_wrap'>
-    <view class='ad_item' wx:for="{{adList}}" bindtap='tryIt' data-appid="{{item.appid}}" data-token="{{item.token}}" data-adid="{{item.adid}}">
-        <image src="{{item.json.imgurl}}"></image>
-
-        <view class='ad_msg'>
-            <view class="ad_msg_p">{{item.json.title}}</view>
-            <view class="ad_msg_i">{{item.json.describe}}</view>
-        </view>
-
-        <view class='try'>
-            去试试
-        </view>
-    </view>
+    <block wx:if="{{adList}}">
+        <block wx:key wx:for="{{adList}}">
+            <navigator target="miniProgram" open-type="navigate" app-id="{{item.appid}}" path="{{item.path}}" extra-data="{{item.extraData}}"
+                version="release" hover-class="none">
+                <view class='ad_item' bindtap='tryIt' data-token="{{item.token}}" data-adid="{{item.adid}}" wx:if="{{item.type ==1}}">
+                    <image src="{{item.json.imgurl}}"></image>
+                    <view class='ad_msg'>
+                        <view class="ad_msg_p">{{item.json.title}}</view>
+                        <view class="ad_msg_i">{{item.json.describe}}</view>
+                    </view>
+                    <view class='try'>
+                        去试试
+                    </view>
+                </view>
+            </navigator>
+        </block>
+    </block>
 </view>
-<view class='wait' wx:if="{{adList.length==0}}">
+<view class='wait' wx:if="{{!adList || adList.length==0}}">
     暂无更多...
 </view>
