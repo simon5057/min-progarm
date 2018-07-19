@@ -30,7 +30,7 @@ class CommonApi {
                 } else {
                     $(res);
                 }
-            }, err => {
+            }).catch(err => {
                 $(err);
             })
         })
@@ -70,13 +70,7 @@ class CommonApi {
     }
     // 验证用户是否授权
     static checkAuthorization() {
-        return new Promise((_, $) => {
-            this.wxGetSetting('userInfo').then(res => {
-                _(res);
-            }, err => {
-                $(err);
-            })
-        })
+        return this.wxGetSetting('userInfo');
     }
     /**
      * 验证用户是否授权（并获取用户信息）
@@ -90,7 +84,7 @@ class CommonApi {
                 return this.wxGetUserInfo();
             }).then(res => {
                 _(res);
-            }, err => {
+            }).catch(err => {
                 $(err);
             })
         })

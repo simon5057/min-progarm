@@ -32,7 +32,7 @@ class Api extends require('./common-api') {
                 return this.loginToApp(res.code);
             }).then(res => {
                 _(res);
-            }, err => {
+            }).catch(err => {
                 $(err);
             })
         })

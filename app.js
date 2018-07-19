@@ -13,7 +13,7 @@ App({
                 this.globalData.token = res.token;
                 wx.setStorageSync('userData', res);
                 _(res);
-            }, err => {
+            }).catch(err => {
                 $(err);
             })
         })
