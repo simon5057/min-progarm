@@ -10,6 +10,8 @@
 │  README.md                            // 帮助
 ├─api
 │  ├─config.js                          // 接口地址等参数配置文件
+│  ├─interceptor.js                     // http请求拦截器
+│  ├─util.js                            // 拦截器中使用的方法函数
 │  ├─common-api.js                      // 公用接口
 │  └─api.js                             // 业务接口
 ├─images
@@ -43,12 +45,45 @@
 
 ```
 ``` js
+    /* api.js */
+    import request from './interceptor';
+    //  自定义请求拦截器
+    request.interceptors.request.use((data) => {
+        console.log(`url:${data.url} method:${data.method}`);
+        wx.showLoading({
+            title: '加载中',
+        })
+        return data;
+    }, error => {
+        return Promise.reject(error);
+    });
+    // 自定义返回拦截器
+    request.interceptors.response.use((data)=>{
+        //...
+    }) 
+
+    // 不需要拦截的请求
+    static example(value) {
+        return this.post({
+            url: `${APIURL}/example`,
+            data: {
+                key: value
+            }
+        })
+    }
+
+    // 不需要拦截的请求（使用request）用法和axios大致相同
+    static test(data) {
+        return request.post(`${APIURL}/test`, {
+            data: data
+        })
+    }
+```
+``` js
     /* app.js */
     const Api = require('./api/api.js');
     
-    Api.wxLogin()     // 微信登录
-    Api.wxGetUserInfo()     // 微信获取用户信息
-    Api.checkAuthorization()     // 验证用户是否授权
+    Api.wxPack(wx.login)     // 微信函数Promise封装(登录))
     Api.checkAuthorizationGetUserInfo([,callback])     // 验证用户是否授权并获取用户信息(callback 检查用户授权之后执行的回调函数 `非必填`)
     // ...
 
@@ -64,7 +99,6 @@
     login() {
         return new Promise((_, $) => {
             Api.login().then(res => {
-                this.globalData.token = res.token;
                 wx.setStorageSync('userData', res);
                 _(res);
             }.catch(err => {
@@ -76,11 +110,8 @@
     tokenInit(callback) {
         if (!callback || typeof callback !== 'function') throw new Error('tokenInit callback(必传)参数类型必须为function');
         // 检查是否存储用户信息
-        if (!!this.globalData.token) {
-            callback(this.globalData.token);
-        } else if (!!wx.getStorageSync('userData')) {
+        if (!!wx.getStorageSync('userData')) {
             let userData = wx.getStorageSync('userData');
-            this.globalData.token = userData.token;
             callback(this.globalData.token);
         } else {
             // 用户登录
@@ -89,19 +120,6 @@
             })
         }
     },
-    /**
-     * TokenExpiredLoginAgain token过期，重新登录
-     * @param {Object} err 请求错误对象
-     * @param {functio} callback 重新登录成功后的回调
-     */
-    TokenExpiredLoginAgain(err, callback) {
-        if (!!err && err.statusCode === 403) {
-            if (callback && typeof callback !== 'function') throw new Error('TokenExpiredLoginAgain callback参数类型必须为function');
-            this.login().then(res => {
-                if (callback) callback(this.globalData.token);
-            })
-        }
-    }
 ```
 ``` js
     /* index.js */

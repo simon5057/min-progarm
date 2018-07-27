@@ -1,5 +1,4 @@
 const {
-    APIURL,
     ADURL,
     CHANNELID
 } = require('./config.js');
@@ -49,14 +48,7 @@ class CommonApi {
             ...options
         })
     }
-    // 微信登录
-    static wxLogin() {
-        return this.wxPack(wx.login);
-    }
-    // 微信获取用户信息
-    static wxGetUserInfo() {
-        return this.wxPack(wx.getUserInfo);
-    }
+
     static wxGetSetting(scope) {
         return new Promise((_, $) => {
             this.wxPack(wx.getSetting).then(res => {
@@ -68,10 +60,6 @@ class CommonApi {
             })
         })
     }
-    // 验证用户是否授权
-    static checkAuthorization() {
-        return this.wxGetSetting('userInfo');
-    }
     /**
      * 验证用户是否授权（并获取用户信息）
      * @param {function} callback 检查用户授权之后执行的回调函数 `非必填`
@@ -79,9 +67,9 @@ class CommonApi {
     static checkAuthorizationGetUserInfo(callback) {
         if (callback && typeof callback !== 'function') throw new Error('checkAuthorizationGetUserInfo 参数类型必须为function');
         return new Promise((_, $) => {
-            this.checkAuthorization().then(res => {
+            this.wxGetSetting('userInfo').then(res => {
                 if (callback) callback();
-                return this.wxGetUserInfo();
+                return this.wxPack(wx.getUserInfo);
             }).then(res => {
                 _(res);
             }).catch(err => {
