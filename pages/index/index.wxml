@@ -20,3 +20,7 @@
 
 <rotate-nav></rotate-nav>
 <float-ad></float-ad>
+
+<open-setting scope="a">
+    <view>open-setting</view>
+</open-setting>

@@ -6,7 +6,8 @@
         "float-ad": "/components/float-ad/float-ad",
         "zan-noticebar": "/components/noticebar/index",
         "form-button": "/components/form-button/index",
-		"zan-popup": "/components/popup/index",
-		"rotate-nav": "/components/rotate-nav/index"
+        "zan-popup": "/components/popup/index",
+        "rotate-nav": "/components/rotate-nav/index",
+        "open-setting": "/components/open-setting/index"
     }
 }

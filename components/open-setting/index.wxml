@@ -1,0 +1,5 @@
+<!--components/open-type/index.wxml-->
+<view class="wrap wrap-class">
+    <button wx:if="{{showMask}}" class="button-mask" open-type="openSetting" bindopensetting="openSetting"></button>
+    <slot></slot>
+</view>

@@ -24,7 +24,7 @@ function forEach(obj, fn) {
         obj = [obj];
     }
 
-    if (isArray(obj)) {
+    if (Array.isArray(obj)) {
         // Iterate over array values
         for (var i = 0, l = obj.length; i < l; i++) {
             fn.call(null, obj[i], i, obj);
