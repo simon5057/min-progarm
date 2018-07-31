@@ -5,7 +5,12 @@ import request from './interceptor';
 
 //  自定义请求拦截器
 request.interceptors.request.use((data) => {
-    console.log(`url:${data.url} method:${data.method}`);
+    // console.log(`url:${data.url} method:${data.method}`);
+    data.url = `${APIURL}${data.url}`;
+    if (!data.data) data.data = {};
+    if (wx.getStorageSync('token')) {
+        data.data.token = wx.getStorageSync('token');
+    }
     wx.showLoading({
         title: '加载中',
     })
@@ -24,7 +29,7 @@ request.interceptors.response.use((data) => {
         return new Promise((resolve, reject) => {
             Api.login(res.userInfo).then(res => {
                 wx.hideLoading();
-                wx.setStorageSync('userData', res);
+                wx.setStorageSync('token', res);
                 reject(res);
             })
         })
@@ -40,7 +45,7 @@ class Api extends require('./common-api') {
 
     // 需要拦截的token的 接口（使用request）
     static test(data) {
-        return request.post(`${APIURL}/test`, {
+        return request.post(`/test`, {
             data: data
         })
     }
@@ -72,6 +77,16 @@ class Api extends require('./common-api') {
             }).catch(err => {
                 $(err);
             })
+        })
+    }
+    /**
+     * ` sendFormId ` 发送模板消息
+     * @param {object} formIdData 模板数据
+     */
+    static sendFormId(formIdData) {
+        return request.post(`/sendFormId`, {
+            form_id: formIdData.form_id,
+            form_time: formIdData.form_time
         })
     }
 }

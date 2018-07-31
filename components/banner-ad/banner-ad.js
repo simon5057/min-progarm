@@ -19,13 +19,10 @@ Component({
         adType: 1 // 广告类型
     },
     attached() {
-        this._init();
+        this.getAndShowAd();
     },
     // 组件的方法列表
     methods: {
-        _init() {
-            this.getAndShowAd();
-        },
         // 获取并展现广告
         getAndShowAd() {
             let clickedAdList;

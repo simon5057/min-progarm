@@ -60,23 +60,6 @@ class CommonApi {
             })
         })
     }
-    /**
-     * 验证用户是否授权（并获取用户信息）
-     * @param {function} callback 检查用户授权之后执行的回调函数 `非必填`
-     */
-    static checkAuthorizationGetUserInfo(callback) {
-        if (callback && typeof callback !== 'function') throw new Error('checkAuthorizationGetUserInfo 参数类型必须为function');
-        return new Promise((_, $) => {
-            this.wxGetSetting('userInfo').then(res => {
-                if (callback) callback();
-                return this.wxPack(wx.getUserInfo);
-            }).then(res => {
-                _(res);
-            }).catch(err => {
-                $(err);
-            })
-        })
-    }
 
     /**
      *` adListBytype ` 获取广告数据列表

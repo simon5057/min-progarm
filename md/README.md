@@ -84,7 +84,7 @@
     const Api = require('./api/api.js');
     
     Api.wxPack(wx.login)     // 微信函数Promise封装(登录))
-    Api.checkAuthorizationGetUserInfo([,callback])     // 验证用户是否授权并获取用户信息(callback 检查用户授权之后执行的回调函数 `非必填`)
+    Api.wxGetSetting(scope)     // 检查用户是否授权
     // ...
 
     Api.adListBytype(type)      // 获取广告数据列表(type 1:(banner) 2:(float)  `必填`)
@@ -99,7 +99,7 @@
     login() {
         return new Promise((_, $) => {
             Api.login().then(res => {
-                wx.setStorageSync('userData', res);
+                wx.setStorageSync('token', res);
                 _(res);
             }.catch(err => {
                 $(err);
@@ -110,13 +110,12 @@
     tokenInit(callback) {
         if (!callback || typeof callback !== 'function') throw new Error('tokenInit callback(必传)参数类型必须为function');
         // 检查是否存储用户信息
-        if (!!wx.getStorageSync('userData')) {
-            let userData = wx.getStorageSync('userData');
-            callback(this.globalData.token);
+        if (!!wx.getStorageSync('token')) {
+            callback();
         } else {
             // 用户登录
             this.login().then(res => {
-                callback(this.globalData.token);
+                callback();
             })
         }
     },
@@ -139,16 +138,13 @@
 ``` html
     <!-- index.wxml -->
     <!-- bind:authorization 用户授权成功后的回调 -->
-    <authorization-button wx:if='{{AuthorizationModal}}' bind:authorization='hideAuthorizationModal'></authorization-button>
+    <authorization-button bind:authorization='authorizationHandle'></authorization-button>
 ```
 ``` js
     /* index.js */
-    // 授权成功后隐藏授权蒙层
-    hideAuthorizationModal(e) {
+    // 授权成功后返回userinfo
+    authorizationHandle(e) {
         console.log(e);
-        this.setData({
-            AuthorizationModal: false
-        })
     }
 ```
 ``` json
@@ -200,17 +196,9 @@
 ```
 ``` js
     // 存储并发送模板消息
-    // e.detail: Object
-    //     formId:string, // property：模板消息
-    //     dealFormId:function, // method：存储模板消息并发送模板消息 
-    //     sendFormIds:function // method：发送模板消息 
     sendFormMessage(e) {
-        console.log(e.detail);
-        let data = e.detail;
-        let fn = data.formMessage;
-        fn.dealFormId(data.formId, this.data.token, () => {
-            console.log(1)
-        })
+        console.log(e);
+        // ...需要同时执行的回调函数
     }
 ```
 - ZanUI 

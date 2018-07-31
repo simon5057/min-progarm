@@ -15,12 +15,9 @@ Component({
     },
 
     attached() {
-        this._init();
+        this.getAndShowAd();
     },
     methods: {
-        _init() {
-            this.getAndShowAd();
-        },
         // 获取并展现广告
         getAndShowAd() {
             Api.adListBytype(this.data.adType).then(res => {

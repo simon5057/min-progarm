@@ -12,7 +12,6 @@ Component({
     },
     attached() {
         this.checkFormId();
-
     },
     // 组件的方法列表
     methods: {
@@ -41,12 +40,13 @@ Component({
             this.setData({
                 show: false
             })
-            console.log(e);
+            // console.log(e);
             let formId = e.detail.formId;
-            this.triggerEvent('sendFormMessage', {
-                formId: formId,
-                formMessage: formMessage
-            })
+            if (wx.getStorageSync('token')) {
+                formMessage.dealFormId(formId, () => {
+                    this.triggerEvent('sendFormMessage');
+                })
+            }
         },
     }
 })

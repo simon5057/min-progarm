@@ -1,7 +1,7 @@
 <!-- index.wxml -->
 <banner-ad bind:open='openAd' wrap-class='banner-ad-bg'></banner-ad>
 
-<authorization-button wx:if='{{AuthorizationModal}}' bind:authorization='hideAuthorizationModal'></authorization-button>
+<authorization-button bind:authorization='authorizationHandle'></authorization-button>
 
 <zan-noticebar text="{{ text }}" scrollable="true" speed="{{ 20 }}" />
 <form-button bind:sendFormMessage="sendFormMessage"></form-button>
