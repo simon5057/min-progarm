@@ -13,6 +13,7 @@ request.interceptors.request.use((data) => {
     }
     wx.showLoading({
         title: '加载中',
+        mask: true
     })
     return data;
 }, error => {
@@ -25,10 +26,10 @@ request.interceptors.response.use((data) => {
     return data;
 }, error => {
     // 如果token过期 返回错误时，先调用登录，并将登录后的信息存储再返回
+    wx.hideLoading();
     if (error.data.code == 10000) {
         return new Promise((resolve, reject) => {
             Api.login(res.userInfo).then(res => {
-                wx.hideLoading();
                 wx.setStorageSync('token', res);
                 reject(res);
             })

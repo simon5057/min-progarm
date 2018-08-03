@@ -1,6 +1,6 @@
 // components/open-type/index.js
 const Api = require('../../api/api.js');
-let SCOPES = ['userLocation', 'address', 'invoiceTitle', 'werun', 'record', 'writePhotosAlbum', 'camera'];
+let SCOPES = ['address', 'userLocation', 'invoiceTitle', 'werun', 'record', 'writePhotosAlbum', 'camera'];
 Component({
     // 组件的属性列表
     properties: {
@@ -18,11 +18,11 @@ Component({
     attached() {
         if (!this._checkScope(this.data.scope)) {
             this.setData({
-                scope: 'address'
+                scope: SCOPES[0]
             })
         }
         this.check();
-        console.log(this.data.scope);
+        // console.log(this.data.scope);
     },
     // 组件的方法列表
     methods: {
@@ -44,7 +44,7 @@ Component({
                 })
                 this.triggerEvent("authorized", `scope.${this.data.scope} 授权成功`);
             }).catch(err => {
-                console.log(err);
+                // console.log(err);
                 // 未授权 发起授权
                 return Api.wxPack(wx.authorize, {
                     scope: `scope.${scope}`

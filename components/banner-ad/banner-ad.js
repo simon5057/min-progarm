@@ -1,6 +1,6 @@
 // components/banner-ad/banner-ad.js
 const Api = require('../../api/api.js')
-const orders = ['normal', 'inverted'];
+const ORDERS = ['normal', 'inverted'];
 
 Component({
     // 组件的属性列表
@@ -19,10 +19,23 @@ Component({
         adType: 1 // 广告类型
     },
     attached() {
+        if (!this._checkScope(this.data.order)) {
+            this.setData({
+                order: ORDERS[0]
+            })
+        }
         this.getAndShowAd();
     },
     // 组件的方法列表
     methods: {
+        // 检查允许的scope
+        _checkScope(val) {
+            var isValidOrder = ~ORDERS.indexOf(val);
+            if (!isValidOrder) {
+                console.warn('mode only accept value of ' + ORDERS + ', now get ' + val + '.\n' + 'and use defalut address now!');
+            }
+            return isValidOrder;
+        },
         // 获取并展现广告
         getAndShowAd() {
             let clickedAdList;
